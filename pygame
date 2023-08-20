@@ -1,0 +1,66 @@
+import pygame
+import os
+
+# Initialize pygame
+pygame.init()
+
+# Set up display
+screen = pygame.display.set_mode((300, 100))
+pygame.display.set_caption("Music Player")
+
+# Set up clock
+clock = pygame.time.Clock()
+
+# Set up fonts
+font = pygame.font.Font(None, 36)
+
+# Set up colors
+white = (255, 255, 255)
+black = (0, 0, 0)
+
+# Set up music directory (update this path)
+music_directory = "path/to/your/music/folder"
+
+# Get list of music files
+music_files = [f for f in os.listdir(music_directory) if f.endswith(".mp3")]
+
+# Initialize variables
+current_track = 0
+is_playing = False
+
+# Load and play the first track
+pygame.mixer.init()
+pygame.mixer.music.load(os.path.join(music_directory, music_files[current_track]))
+
+# Main loop
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                if is_playing:
+                    pygame.mixer.music.pause()
+                else:
+                    pygame.mixer.music.unpause()
+                is_playing = not is_playing
+            elif event.key == pygame.K_RIGHT:
+                current_track = (current_track + 1) % len(music_files)
+                pygame.mixer.music.load(os.path.join(music_directory, music_files[current_track]))
+                pygame.mixer.music.play()
+            elif event.key == pygame.K_LEFT:
+                current_track = (current_track - 1) % len(music_files)
+                pygame.mixer.music.load(os.path.join(music_directory, music_files[current_track]))
+                pygame.mixer.music.play()
+
+    screen.fill(white)
+    text = font.render(f"Now playing: {music_files[current_track]}", True, black)
+    screen.blit(text, (10, 10))
+    
+    pygame.display.flip()
+    clock.tick(30)
+
+# Clean up
+pygame.mixer.quit()
+pygame.quit()
