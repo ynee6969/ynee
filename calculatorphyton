@@ -1,0 +1,76 @@
+import math
+
+def add(x, y):
+    return x + y
+
+def subtract(x, y):
+    return x - y
+
+def multiply(x, y):
+    return x * y
+
+def divide(x, y):
+    if y != 0:
+        return x / y
+    else:
+        return "Cannot divide by zero"
+
+def power(x, y):
+    return x ** y
+
+def sqrt(x):
+    if x >= 0:
+        return math.sqrt(x)
+    else:
+        return "Invalid input"
+
+def trig_functions(angle, function):
+    radians = math.radians(angle)
+    if function == 'sin':
+        return math.sin(radians)
+    elif function == 'cos':
+        return math.cos(radians)
+    elif function == 'tan':
+        return math.tan(radians)
+    else:
+        return "Invalid function"
+
+def main():
+    print("Scientific Calculator")
+    print("Available operations:")
+    print("1. Addition")
+    print("2. Subtraction")
+    print("3. Multiplication")
+    print("4. Division")
+    print("5. Power")
+    print("6. Square Root")
+    print("7. Trigonometric Functions")
+
+    choice = input("Enter operation number (1-7): ")
+
+    if choice in ('1', '2', '3', '4', '5'):
+        x = float(input("Enter first number: "))
+        y = float(input("Enter second number: "))
+
+        if choice == '1':
+            print("Result:", add(x, y))
+        elif choice == '2':
+            print("Result:", subtract(x, y))
+        elif choice == '3':
+            print("Result:", multiply(x, y))
+        elif choice == '4':
+            print("Result:", divide(x, y))
+        elif choice == '5':
+            print("Result:", power(x, y))
+    elif choice == '6':
+        x = float(input("Enter a number: "))
+        print("Result:", sqrt(x))
+    elif choice == '7':
+        angle = float(input("Enter angle in degrees: "))
+        function = input("Enter function (sin, cos, tan): ")
+        print("Result:", trig_functions(angle, function))
+    else:
+        print("Invalid choice")
+
+if __name__ == "__main__":
+    main()
